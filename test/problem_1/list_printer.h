@@ -14,8 +14,8 @@ public:
     }
 
     void print(std::string val) override {
-        /*
-         * TODO: homework
-         */
+
+        output.push_back(val);
+        output.push_back("\n");
     };
 };

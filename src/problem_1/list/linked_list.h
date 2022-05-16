@@ -30,7 +30,7 @@ class LinkedList : public List<T> {
 private:
     ListNode<T> *head;  // this implementation has a dummy head (sentry head node)
     size_t num_of_element;
-
+    void helperReversePrint(Printer &print, ListNode<T> *ptr) const;
 public:
     LinkedList() {
         head = new ListNode<T>();
@@ -130,6 +130,8 @@ public:
     void reverse_iterative() override;
 
     void reverse_print(Printer &print) const;
+
+
 };
 
 #include "linked_list.cpp"

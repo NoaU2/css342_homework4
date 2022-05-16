@@ -117,7 +117,25 @@ void LinkedList<T>::reverse_iterative() {
 
 template<class T>
 void LinkedList<T>::reverse_print(Printer &printer) const {
-    /*
-     * TODO: homework
-     */
+
+    ListNode<T> *pointer = head;
+
+    if(head->next == nullptr){
+        return;
+    }
+    pointer = pointer->next; //sets the pointer to the first node that has a value
+
+    helperReversePrint(printer, pointer); //sends to a recursive helper function
+}
+
+template<class T>
+void LinkedList<T>::helperReversePrint(Printer &printer, ListNode<T> *ptr) const{
+    //recursive helper function that called itself until the end of the linked list
+    if(ptr->next == nullptr){
+        printer.print(std::to_string(ptr->val));
+    }
+    else{
+        helperReversePrint(printer, ptr->next);
+        printer.print(std::to_string(ptr->val));
+    }
 }
