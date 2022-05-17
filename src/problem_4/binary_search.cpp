@@ -11,7 +11,7 @@ int binary_search(int *data, int length, int target) {
 }
 
 int binary_search_helper(int *data, int target, int start, int end) {
-    if(end < start){ //if the data isn't found
+    if(end <= start){ //if the data isn't found
         return -1;
     }
 
