@@ -71,9 +71,28 @@ public:
     }
 
     void put(KeyType const &key, ValueType const &value) override {
-        /*
-         * TODO: homework
-         */
+
+        int hashed_key = hashFunc(key);
+
+        if(entries[hashed_key] == nullptr) { //first check if there are no node in the list
+            entries[hashed_key] = new Entry(key, value);
+        }
+
+        else{ //if not the nodes are searched through
+            Entry<KeyType, ValueType> *ptr = entries[hashed_key];
+            //search stops either at the end of the list or when a duplicate key is found
+            while(ptr->next != nullptr && ptr->key != key){
+                ptr = ptr->next;
+            }
+            //if a dublicate is found, the new value is set and the function returns
+            if (ptr->key == key) {
+                ptr->value = value;
+                return;
+            }
+            ptr->next = new Entry(key, value);
+        }
+        //count is only incremented at the end so duplicate values don't affect the count
+        count++;
     }
 
     bool get(KeyType const &key, ValueType &value) const override {
@@ -106,9 +125,33 @@ public:
     }
 
     bool remove(KeyType const &key) override {
-        /*
-         * TODO: homework
-         */
+        //entering the correct entry list
+        int hashed_key = hashFunc(key);
+        Entry<KeyType, ValueType> *ptr = entries[hashed_key];
+
+        //immediately sent false if the list is empty
+        if(ptr == nullptr){
+            return false;
+        }
+        //if the item that needs to be removed is the first item of the list
+        if(ptr->key == key){
+            count--;
+            entries[hashed_key] = ptr->next;
+            delete ptr;
+            return true;
+        }
+        //checks the rest of the list
+        while (ptr->next != nullptr) {
+            if (ptr->next->key == key) {
+                delete ptr->next;
+                ptr->next = ptr->next->next;
+                count--;
+                return true;
+            }
+            ptr = ptr->next;
+        }
+        //returns false if nothing is found
+        return false;
     }
 
     bool operator==(const ArrayMap &other_map) const {
