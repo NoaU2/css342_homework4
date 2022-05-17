@@ -7,7 +7,7 @@ float StatCalculator::mean(const List<float> &data) {
         return sum;
     }
 
-    for(int i = 0; i < data.size(); i++){
+    for(size_t i = 0; i < data.size(); i++){
         sum += data[i];
     }
 
