@@ -1,9 +1,17 @@
 #include "stat_calculator.h"
 
 float StatCalculator::mean(const List<float> &data) {
-    /*
-     * TODO: homework
-     */
+    float sum = 0;
+
+    if(data.size() == 0){
+        return sum;
+    }
+
+    for(int i = 0; i < data.size(); i++){
+        sum += data[i];
+    }
+
+    return sum/data.size();
 }
 
 /*
@@ -12,9 +20,29 @@ float StatCalculator::mean(const List<float> &data) {
 void StatCalculator::percentiles(List<float> &data,
                                  int percentile_target_step,
                                  Map<int, float> &result_map) {
-    /*
-     * TODO: homework
-     */
+
+    //sort the data first
+    sort(data);
+
+    int percentile = 0;
+    //create a loop to increment the percentile by the target step
+    while(percentile <= 100) {
+        float rank = ((float)(percentile)/100 *(data.size() - 1) );
+
+        //if the rank is an integer
+        if(floor(rank) == rank){
+            result_map.put(percentile, data[rank]);
+        }
+        //if it's not an integer use the formula to calculate the number
+        else{
+            float fractionalRank = rank - floor(rank);
+            float inBetween = data[ceil(rank)] - data[floor(rank)];
+            float finalNumber = data[floor(rank)] + (fractionalRank * inBetween);
+            result_map.put(percentile, finalNumber);
+        }
+        percentile += percentile_target_step;
+    }
+
 }
 
 void StatCalculator::sort(List<float> &data) {
