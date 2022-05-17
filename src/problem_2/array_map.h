@@ -75,7 +75,7 @@ public:
         int hashed_key = hashFunc(key);
 
         if(entries[hashed_key] == nullptr) { //first check if there are no node in the list
-            entries[hashed_key] = new Entry(key, value);
+            entries[hashed_key] = new Entry<KeyType, ValueType>(key, value);
         }
 
         else{ //if not the nodes are searched through
@@ -89,7 +89,7 @@ public:
                 ptr->value = value;
                 return;
             }
-            ptr->next = new Entry(key, value);
+            ptr->next = new Entry<KeyType, ValueType>(key, value);
         }
         //count is only incremented at the end so duplicate values don't affect the count
         count++;
